@@ -1,9 +1,9 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { User } from '@prisma/client';
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
-import * as bcrypt from 'bcryptjs';
+import { ConflictException, Injectable } from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service";
+import { User } from "@prisma/client";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { LoginUserDto } from "./dto/login-user.dto";
+import * as bcrypt from "bcryptjs";
 
 @Injectable()
 export class UsersService {
@@ -13,9 +13,9 @@ export class UsersService {
     const existingUser = await this.prisma.user.findUnique({
       where: { email: data.email },
     });
-    
-    if(existingUser) {
-      throw new ConflictException('User with this email already exists');
+
+    if (existingUser) {
+      throw new ConflictException("User with this email already exists");
     }
 
     const salt = await bcrypt.genSalt();
@@ -33,6 +33,6 @@ export class UsersService {
     const user = await this.prisma.user.findUnique({
       where: { email: data.email },
     });
-    return user // ???
+    return user; // ???
   }
 }
